@@ -1,4 +1,5 @@
 import { LightningElement, wire } from 'lwc';
+import { reduceErrors } from 'c/ldsUtils';
 import Name from '@salesforce/schema/Account.Name';
 import AnnualRevenue from '@salesforce/schema/Account.AnnualRevenue';
 import Industry from '@salesforce/schema/Account.Industry';
@@ -14,4 +15,9 @@ export default class AccountList extends LightningElement {
     columns = COLUMNS;
     @wire(getAccounts)
     accounts;
+
+    get errors() {
+        return(this.accounts.error)?    
+            reduceErrors(this.accounts.error) : [];
+    }
 }
